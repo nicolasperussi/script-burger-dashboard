@@ -1,0 +1,36 @@
+<nav
+  class="bg-secondary-bg w-[132px] py-8 flex flex-col items-center gap-8 h-full rounded-lg"
+>
+  @for (link of links; track $index) {
+  <a
+    class="flex flex-col w-full justify-center items-center gap-[10px] relative"
+    [routerLink]="link.link"
+    [ngClass]="{ 'opacity-25 hover:opacity-75': link.link !== route }"
+  >
+    @if (link.link === route) {
+    <div class="w-[3px] h-full bg-tint absolute left-0"></div>
+    }
+
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+      [fontIcon]="link.icon"
+      class="material-icons-round text-[36px] w-max h-max"
+    />
+    <p class="font-light text-sm text-primary-text">{{ link.title }}</p>
+  </a>
+  <hr class="w-[100px] border-primary-bg" />
+  }
+  <button
+    class="flex mt-auto flex-col w-full justify-center items-center gap-[10px] relative opacity-25 hover:opacity-75 active:opacity-100"
+    (click)="authService.logout()"
+    >
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="logout"
+      class="material-icons-round text-[36px] w-max h-max"
+    />
+    <p class="font-light text-sm text-primary-text">Sair</p>
+  </button>
+</nav>

@@ -1,0 +1,147 @@
+<main class="w-full h-full flex flex-row gap-4">
+  <app-orderlist (selectedOrder)="onSelectOrder($event)" />
+  @if (order) {
+
+  <div class="flex w-full flex-col gap-4">
+    <!-- Top row -->
+    <div class="flex flex-col gap-4 p-4 rounded-lg bg-secondary-bg">
+      <h1 class="font-medium text-2xl text-primary-text">
+        Pedido n&#186; {{ order.id }}
+      </h1>
+      <div class="w-full h-[114px] grid place-content-center">
+        placeholder hahahah
+      </div>
+    </div>
+    <!-- Middle row -->
+    <div class="flex flex-row flex-1 gap-4">
+      <div class="flex flex-col gap-4 p-4 rounded-lg w-[850px] bg-secondary-bg">
+        <h1 class="font-medium text-2xl text-primary-text">Itens</h1>
+        <div class="flex flex-col gap-4 px-4 w-full h-full overflow-auto">
+          @for (item of order.items; track $index) {
+          <div class="flex flex-row w-full">
+            <div class="flex flex-row w-[400px] gap-4">
+              <img
+                class="w-[50px] h-[50px] object-cover rounded-lg"
+                [src]="
+                  'http://localhost:3003/images/' + item.product.slug + '.jpg'
+                "
+                [alt]="item.product.name"
+              />
+              <div class="flex flex-col">
+                <span class="font-light text-secondary-text text-sm">{{
+                  printCategory(item.product.category.toString())
+                }}</span>
+                <h1 class="font-medium text-primary-text">
+                  {{ item.product.name }}
+                </h1>
+              </div>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="font-light text-secondary-text text-sm">
+                Quantidade
+              </span>
+              <h1 class="font-medium text-primary-text">{{ item.quantity }}</h1>
+            </div>
+            <div class="flex flex-col ml-auto items-end">
+              <span class="font-light text-secondary-text text-sm">Preço</span>
+              <h1 class="font-medium text-primary-text">
+                {{ printPrice(item.product.price) }}
+              </h1>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="flex flex-col gap-4 p-4 flex-1 rounded-lg bg-secondary-bg">
+        <h1 class="font-medium text-2xl text-primary-text">Pagamento</h1>
+        <!-- TODO: add delivery fee and discount after change in api -->
+        <!--
+        <div class="flex flex-col"> 
+          <span class="font-light text-secondary-text text-sm">
+            Total
+          </span>
+          <h1 class="font-medium text-primary-text">{{ item.quantity }}</h1> 
+        </div>
+        -->
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm"> Total </span>
+          <h1 class="font-medium text-primary-text text-2xl">
+            {{ printPrice(order.totalPrice) }}
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom row -->
+    <div class="flex flex-row flex-1 gap-4">
+      <div class="flex flex-col p-4 gap-4 bg-secondary-bg flex-1 rounded-lg">
+        <h1 class="font-medium text-2xl text-primary-text">Cliente</h1>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm">Nome</span>
+          <h1 class="font-medium text-primary-text">
+            {{ order.client?.name }}
+          </h1>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm">Telefone</span>
+          <h1 class="font-medium text-primary-text">
+            {{ order.client?.phone }}
+          </h1>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm">Endereço</span>
+          <h1 class="font-medium text-primary-text">
+            {{
+              order.deliveryAddress.street + ", " + order.deliveryAddress.number
+            }}
+          </h1>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm">CEP</span>
+          <h1 class="font-medium text-primary-text">
+            {{ order.deliveryAddress.cep }}
+          </h1>
+        </div>
+      </div>
+      @if (order.courier) {
+      <div class="flex flex-col p-4 gap-4 bg-secondary-bg flex-1 rounded-lg">
+        <h1 class="font-medium text-2xl text-primary-text">Entregador</h1>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm">Nome</span>
+          <h1 class="font-medium text-primary-text">
+            {{ order.courier.name }}
+          </h1>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-light text-secondary-text text-sm"
+            >Placa do Veículo</span
+          >
+          <h1 class="font-medium text-primary-text">
+            {{ order.courier.licensePlate }}
+          </h1>
+        </div>
+      </div>
+      } @else {
+      <!-- TODO: add function to assign courier to order -->
+      <div
+        class="p-4 gap-4 bg-secondary-bg flex-1 grid place-content-center rounded-lg ring-8 ring-inset ring-secondary-bg cursor-pointer hover:bg-primary-bg"
+      >
+        <div class="flex flex-col gap-4 items-center justify-center">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="add"
+            class="material-icons-round text-5xl text-secondary-text w-max h-max"
+          />
+          <p class="font-medium text-xl text-secondary-text">
+            Atribuir entregador
+          </p>
+        </div>
+      </div>
+      }
+      <div
+        class="flex flex-col p-4 gap-4 bg-secondary-bg w-[350px] rounded-lg"
+      ></div>
+    </div>
+  </div>
+  }
+</main>

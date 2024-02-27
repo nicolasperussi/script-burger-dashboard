@@ -1,0 +1,64 @@
+<div
+  class="w-[350px] flex flex-col bg-secondary-bg h-full rounded-lg overflow-auto"
+>
+  <header class="flex flex-col w-full gap-4 pt-4">
+    <h1 class="tracking-widest text-2xl font-light text-primary-text px-4">
+      PEDIDOS
+    </h1>
+    <nav class="flex flex-row px-4 justify-between">
+      <button
+        class="flex-1 text-sm font-regular pb-2 relative border-b-[3px] border-b-primary-text"
+      >
+        @if (orders != null) {
+        <span
+          class="font-light text-xs text-white bg-tint w-2 h-2 p-2 absolute grid place-content-center rounded-md right-2 -top-1"
+          >{{ orders.length }}</span
+        >
+        } Pedidos Ativos
+      </button>
+      <button
+        class="flex-1 text-sm font-light pb-2 opacity-50 hover:opacity-75 active:opacity-100"
+      >
+        Finalizados
+      </button>
+    </nav>
+  </header>
+  @if (orders != null) { @for (order of orders; track $index) {
+  <div
+    class="flex flex-col gap-2 py-4 px-8 hover:bg-primary-bg cursor-pointer border-b-[1px] border-b-primary-bg"
+    (click)="changeValue(order)"
+  >
+    <div class="flex flex-row">
+      <h1 class="flex-1 font-medium text-primary-text">
+        Pedido n&#186; {{ order.id }}
+      </h1>
+      <!-- TODO: Add time after fixing problem in api -->
+    </div>
+    <!-- Item list -->
+    <div class="flex flex-row gap-1 items-center">
+      <span
+        class="grid place-content-center w-5 h-5 rounded-full bg-primary-bg font-normal text-secondary-text text-xs"
+        >{{ order.items[0].quantity }}</span
+      >
+      <p class="text-secondary-text font-normal text-xs">
+        {{ order.items[0].product.name }}
+      </p>
+    </div>
+    @if (order.items.length > 2) {
+    <span class="font-semibold text-sm text-secondary-text"
+      >E MAIS {{ order.items.length - 1 }} ITENS</span
+    >
+    } @else {
+    <div class="flex flex-row gap-1 items-center">
+      <span
+        class="grid place-content-center w-5 h-5 rounded-full bg-primary-bg font-normal text-secondary-text text-xs"
+        >{{ order.items[1].quantity }}</span
+      >
+      <p class="text-secondary-text font-normal text-xs">
+        {{ order.items[1].product.name }}
+      </p>
+    </div>
+    }
+  </div>
+  }}
+</div>

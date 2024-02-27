@@ -1,0 +1,9 @@
+<main class="w-screen h-screen grid place-content-center gap-8 bg-secondary-bg">
+  <div class="w-[350px] flex flex-col gap-8 justify-center items-center">
+    <form [formGroup]="loginForm" class="flex flex-col gap-4 w-full">
+      <app-input label="E-mail" formControlName="email" placeholder="email@scriptburger.com" type="email" />
+      <app-input label="Senha" formControlName="password" placeholder="Senha" type="password" />
+    </form>
+    <app-button class="w-full" text="Entrar" [full]="true" (btnClick)="handleSubmit()" />
+  </div>
+</main>
