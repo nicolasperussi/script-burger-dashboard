@@ -6,6 +6,7 @@ import { CommonModule, formatCurrency } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ButtonComponent } from '../../components/button/button.component';
 import { OrdersService } from '../../services/orders.service';
+import { ORDER_STATUS } from '../../interfaces/enums/orderstatus.enum';
 
 @Component({
   selector: 'app-orders',
@@ -43,16 +44,37 @@ export class OrdersComponent {
   }
 
   openAddress(): void {
-    window.open(`https://www.google.com/maps/place/${this.order?.deliveryAddress.street}+${this.order?.deliveryAddress.number}`, '_blank')!.focus();
+    window
+      .open(
+        `https://www.google.com/maps/place/${this.order?.deliveryAddress.street}+${this.order?.deliveryAddress.number}`,
+        '_blank'
+      )!
+      .focus();
   }
 
   nextStep(): void {
     this.orderService.nextStep(this.order!.id);
-    window.location.reload();
+    this.updateStatus(this.order!.status);
   }
 
   cancelOrder(): void {
+    this.order!.status = 'CANCELED';
     this.orderService.cancelOrder(this.order!.id);
-    window.location.reload();
+  }
+
+  updateStatus(currentStatus: ORDER_STATUS): void {
+    switch (currentStatus.toString()) {
+      case 'WAITING':
+        this.order!.status = 'IN_PRODUCTION';
+        break;
+      case 'IN_PRODUCTION':
+        this.order!.status = 'IN_TRANSIT';
+        break;
+      case 'IN_TRANSIT':
+        this.order!.status = 'DELIVERED';
+        break;
+      default:
+        break;
+    }
   }
 }

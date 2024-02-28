@@ -9,7 +9,7 @@
         Pedido n&#186; {{ order.id }}
       </h1>
       <div class="w-full h-[114px] grid place-content-center">
-        placeholder hahahah
+        {{ order.status.toString() }}
       </div>
     </div>
     <!-- Middle row -->
@@ -140,10 +140,26 @@
       }
       <div class="flex flex-col p-4 gap-4 bg-secondary-bg w-[350px] rounded-lg">
         <h1 class="font-medium text-2xl text-primary-text">Ações</h1>
-        <app-button (btnClick)="openAddress()" [full]="true" text="Ver endereço no mapa" leftIcon="map" />
+        <app-button
+          (btnClick)="openAddress()"
+          [full]="true"
+          text="Ver endereço no mapa"
+          leftIcon="map"
+        />
         <!-- Add dialog confirmation -->
-        <app-button (btnClick)="nextStep()" [full]="true" text="Avançar para próxima etapa" leftIcon="skip_next" />
-        <app-button (btnClick)="cancelOrder()" color="red" [full]="true" text="Cancelar pedido" leftIcon="cancel" />
+        <app-button
+          (btnClick)="nextStep()"
+          [full]="true"
+          text="Avançar para próxima etapa"
+          leftIcon="skip_next"
+        />
+        <app-button
+          (btnClick)="cancelOrder()"
+          color="red"
+          [full]="true"
+          text="Cancelar pedido"
+          leftIcon="cancel"
+        />
       </div>
     </div>
   </div>

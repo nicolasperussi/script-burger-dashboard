@@ -1,7 +1,6 @@
-export enum ORDER_STATUS {
-  CANCELED,
-  WAITING,
-  IN_PRODUCTION,
-  IN_TRANSIT,
-  DELIVERED,
-}
+export type ORDER_STATUS =
+  | 'CANCELED'
+  | 'WAITING'
+  | 'IN_PRODUCTION'
+  | 'IN_TRANSIT'
+  | 'DELIVERED';

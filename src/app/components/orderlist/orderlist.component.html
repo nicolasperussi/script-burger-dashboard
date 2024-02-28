@@ -7,23 +7,44 @@
     </h1>
     <nav class="flex flex-row px-4 justify-between">
       <button
-        class="flex-1 text-sm font-regular pb-2 relative border-b-[3px] border-b-primary-text"
+        class="flex-1 text-sm pb-2 relative"
+        [ngClass]="
+          showOrders === 'ACTIVE'
+            ? 'text-base'
+            : 'opacity-50 hover:opacity-75 active:opacity-90'
+        "
+        (click)="changeShowOrders('ACTIVE')"
       >
-        @if (orders != null) {
+        @if (showOrders === 'ACTIVE') {
+        <span
+          class="absolute w-full h-[2px] bg-primary-text bottom-0 left-0"
+        ></span>
+        } @if (orders != null) {
         <span
           class="font-light text-xs text-white bg-tint w-2 h-2 p-2 absolute grid place-content-center rounded-md right-2 -top-1"
-          >{{ orders.length }}</span
+          >{{ getActiveOrders().length }}</span
         >
         } Pedidos Ativos
       </button>
       <button
-        class="flex-1 text-sm font-light pb-2 opacity-50 hover:opacity-75 active:opacity-100"
+        class="flex-1 text-sm pb-2 box-border relative"
+        [ngClass]="
+          showOrders === 'FINISHED'
+            ? 'text-base'
+            : 'opacity-50 hover:opacity-75 active:opacity-90'
+        "
+        (click)="changeShowOrders('FINISHED')"
       >
-        Finalizados
+        @if (showOrders === 'FINISHED') {
+        <span
+          class="absolute w-full h-[2px] bg-primary-text bottom-0 left-0"
+        ></span>
+        } Finalizados
       </button>
     </nav>
   </header>
-  @if (orders != null) { @for (order of orders; track $index) {
+  @if (currentOrders() != null) { @for (order of currentOrders(); track $index)
+  {
   <div
     class="flex flex-col gap-2 py-4 px-8 hover:bg-primary-bg cursor-pointer border-b-[1px] border-b-primary-bg"
     (click)="changeValue(order)"
@@ -32,7 +53,7 @@
       <h1 class="flex-1 font-medium text-primary-text">
         Pedido n&#186; {{ order.id }}
       </h1>
-      <!-- TODO: Add time after fixing problem in api -->
+      <span class="text-sm text-secondary-text">{{ getOrderTime(order) }}</span>
     </div>
     <!-- Item list -->
     <div class="flex flex-row gap-1 items-center">
