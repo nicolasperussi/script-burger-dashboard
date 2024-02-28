@@ -12,6 +12,7 @@ module.exports = {
       "secondary-bg": "#FFFFFF",
       green: "#4ADE80",
       "green-010": "#D1F6DF",
+      red: "#EF4444"
     },
   },
   plugins: [],
